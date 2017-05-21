@@ -33,7 +33,7 @@
 		</ParameterBag>
 	</Resource>
 
-	<Order Id="Order" Name="Order Template" Type="Template" State="Created">
+	<Order Id="PurchaseOrder" Name="Order Template" Type="Template" State="Created">
 		<ParameterBag Id="books" Name="Books" Type="Book">
 			<!-- Parameter Id="bookId" Name="Book reference" Type="Float" Value="0" / -->
 		</ParameterBag>
@@ -47,7 +47,7 @@
 			<Parameter Name="Duration" Id="duration" Value="PT1MS" Type="Duration" />
 		</ParameterBag>
 
-		<Action Id="Validate" Name="Validation of order" Type="Use" ResourceType="Validation" ResourceId="validation" />
+		<Action Id="validate" Name="Validation of order" Type="Use" ResourceType="Validation" ResourceId="validation" />
 
 		<!-- for each book we do a consume, i.e. reduce the stock quantity -->
 		<Action Id="Consume" Name="Consume Template for book" Type="Template">
@@ -56,8 +56,8 @@
 			</ParameterBag>
 		</Action>
 
-		<Action Id="Package" Name="Packaging of Order" Type="Use" ResourceType="Packaging" ResourceId="packaging" />
-		<Action Id="Send" Name="Sending of package" Type="Use" ResourceType="Sending" ResourceId="sending" />
+		<Action Id="package" Name="Packaging of Order" Type="Use" ResourceType="Packaging" ResourceId="packaging" />
+		<Action Id="send" Name="Sending of package" Type="Use" ResourceType="Sending" ResourceId="sending" />
 
 	</Activity>
 
