@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StrolchBootstrap>
+
+	<env id="dev.eitchpc" default="true">
+		<root>/home/eitch/src/git/strolch-bookshop/runtime</root>
+		<environment>dev</environment>
+	</env>
+	<env id="dev.eitchmac" default="true">
+		<root>/Users/eitch/src/git/strolch-bookshop/runtime</root>
+		<environment>dev</environment>
+	</env>
+	
+</StrolchBootstrap>

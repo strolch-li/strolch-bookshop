@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StrolchModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://strolch.li/xsd/StrolchModel-1.4.xsd" xsi:schemaLocation="https://strolch.li/xsd/StrolchModel-1.4.xsd StrolchModel.xsd">
+
+	<Resource Id="Book" Name="Book Template" Type="Template">
+		<ParameterBag Id="parameters" Name="Parameters" Type="Parameters">
+			<Parameter Id="description" Name="Description" Type="String" Value="" />
+			<Parameter Id="quantity" Name="Quantity in Stock" Type="Integer" Value="0" />
+		</ParameterBag>
+	</Resource>
+
+	<Resource Id="Account" Name="Account Template" Type="Template">
+		<ParameterBag Id="parameters" Name="Parameters" Type="Parameters">
+			<Parameter Id="user" Name="User" Type="String" Value="" />
+			<Parameter Id="firstName" Name="First Name" Type="String" Value="" />
+			<Parameter Id="lastName" Name="Last Name" Type="String" Value="" />
+			<Parameter Id="email" Name="E-Mail" Type="String" Value="" />
+		</ParameterBag>
+		<ParameterBag Name="Address" Id="address" Type="Address">
+			<Parameter Id="phone" Name="Telephone Number" Type="String" Value="" />
+			<Parameter Id="street" Name="Street" Type="String" Value="" />
+			<Parameter Id="city" Name="City" Type="String" Value="" />
+			<Parameter Id="zip" Name="Postal Code" Type="String" Value="" />
+			<Parameter Id="country" Name="Country" Type="String" Value="" />
+		</ParameterBag>
+	</Resource>
+
+	<Resource Id="UserCart" Name="UserCart Template" Type="Template">
+		<ParameterBag Id="books" Name="Books" Type="Book">
+			<!-- Parameter Id="bookId" Name="Book reference" Type="Float" Value="0" / -->
+		</ParameterBag>
+		<ParameterBag Id="relations" Name="Relations" Type="Parameters">
+			<Parameter Id="account" Name="Account" Type="String" Interpretation="Resource-Ref" Uom="Account" Value="" />
+		</ParameterBag>
+	</Resource>
+
+	<Order Id="Order" Name="Order Template" Type="Template" State="Created">
+		<ParameterBag Id="books" Name="Books" Type="Book">
+			<!-- Parameter Id="bookId" Name="Book reference" Type="Float" Value="0" / -->
+		</ParameterBag>
+		<ParameterBag Id="relations" Name="Relations" Type="Parameters">
+			<Parameter Id="account" Name="Account" Type="String" Interpretation="Resource-Ref" Uom="Account" Value="" />
+		</ParameterBag>
+	</Order>
+
+	<Activity Id="FromStock" Name="From Stock Template" Type="FromStock" TimeOrdering="Series">
+		<ParameterBag Name="objectives" Id="Objectives" Type="Objectives">
+			<Parameter Name="Duration" Id="duration" Value="PT1MS" Type="Duration" />
+		</ParameterBag>
+
+		<Action Id="Validate" Name="Validation of order" Type="Use" ResourceType="Validation" ResourceId="validation" />
+
+		<!-- for each book we do a consume, i.e. reduce the stock quantity -->
+		<Action Id="Consume" Name="Consume Template for book" Type="Template">
+			<ParameterBag Id="parameters" Name="Parameters" Type="Parameters">
+				<Parameter Id="quantity" Name="Quantity" Type="Float" Value="0" />
+			</ParameterBag>
+		</Action>
+
+		<Action Id="Package" Name="Packaging of Order" Type="Use" ResourceType="Packaging" ResourceId="packaging" />
+		<Action Id="Send" Name="Sending of package" Type="Use" ResourceType="Sending" ResourceId="sending" />
+
+	</Activity>
+
+</StrolchModel>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StrolchModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://strolch.li/xsd/StrolchModel-1.4.xsd" xsi:schemaLocation="https://strolch.li/xsd/StrolchModel-1.4.xsd StrolchModel.xsd">
+
+	<IncludeFile file="templates.xml" />
+
+	<Resource Id="validation" Name="Validation Resource" Type="Validation">
+		<Policies>
+			<Policy Type="ExecutionPolicy" Value="key:ValidationExecution" />
+			<Policy Type="ConfirmationPolicy" Value="key:DefaultConfirmation" />
+		</Policies>
+	</Resource>
+
+	<Resource Id="packaging" Name="Packaging Resource" Type="Packaging">
+		<Policies>
+			<Policy Type="ExecutionPolicy" Value="key:PackagingExecution" />
+			<Policy Type="ConfirmationPolicy" Value="key:DefaultConfirmation" />
+		</Policies>
+	</Resource>
+
+	<Resource Id="sending" Name="Sending Resource" Type="Sending">
+		<Policies>
+			<Policy Type="ExecutionPolicy" Value="key:SendingExecution" />
+			<Policy Type="ConfirmationPolicy" Value="key:DefaultConfirmation" />
+		</Policies>
+	</Resource>
+
+</StrolchModel>

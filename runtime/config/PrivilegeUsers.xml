@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Users>
+
+	<User userId="U10" username="jill" password="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918">
+		<Firstname>Jill</Firstname>
+		<Lastname>Someone</Lastname>
+		<State>ENABLED</State>
+		<Locale>en_GB</Locale>
+		<Roles>
+			<Role>User</Role>
+			<Role>UserPrivileges</Role>
+		</Roles>
+		<Properties>
+			<Property name="email" value="eitch+jill@eitchnet.ch" />
+		</Properties>
+	</User>
+
+	<User userId="U01" username="admin" password="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918">
+		<Firstname>Jill</Firstname>
+		<Lastname>Someone</Lastname>
+		<State>ENABLED</State>
+		<Locale>en_GB</Locale>
+		<Roles>
+			<Role>StrolchAdmin</Role>
+			<Role>UserPrivileges</Role>
+		</Roles>
+		<Properties>
+			<Property name="email" value="eitch+admin@eitchnet.ch" />
+		</Properties>
+	</User>
+
+	<!--
+		Internal
+	-->
+	<User userId="S01" username="agent">
+		<State>SYSTEM</State>
+		<Roles>
+			<Role>agent</Role>
+		</Roles>
+	</User>
+
+</Users>
