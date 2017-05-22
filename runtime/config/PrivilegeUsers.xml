@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Users>
 
-	<User userId="U10" username="jill" password="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918">
+	<User userId="U10" username="jill" password="cb69962946617da006a2f95776d78b49e5ec7941d2bdb2d25cdb05f957f64344" salt="61646d696e">
 		<Firstname>Jill</Firstname>
 		<Lastname>Someone</Lastname>
 		<State>ENABLED</State>
@@ -15,7 +15,7 @@
 		</Properties>
 	</User>
 
-	<User userId="U01" username="admin" password="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918">
+	<User userId="U01" username="admin" password="cb69962946617da006a2f95776d78b49e5ec7941d2bdb2d25cdb05f957f64344" salt="61646d696e">
 		<Firstname>Jill</Firstname>
 		<Lastname>Someone</Lastname>
 		<State>ENABLED</State>
