@@ -3,9 +3,13 @@
 
 	<Role name="User">
 		<Privilege name="li.strolch.service.api.Service" policy="DefaultPrivilege">
+			<Allow>li.strolch.bookshop.service.CreateBookService</Allow>
+			<Allow>li.strolch.bookshop.service.UpdateBookService</Allow>
+			<Allow>li.strolch.bookshop.service.RemoveBookService</Allow>
 		</Privilege>
 		<Privilege name="li.strolch.model.query.StrolchQuery" policy="DefaultPrivilege">
 			<Allow>internal</Allow>
+			<Allow>li.strolch.bookshop.query.BooksQuery</Allow>
 		</Privilege>
 	</Role>
 

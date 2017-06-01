@@ -44,7 +44,7 @@
 
 	<Activity Id="FromStock" Name="From Stock Template" Type="FromStock" TimeOrdering="Series">
 		<ParameterBag Name="objectives" Id="Objectives" Type="Objectives">
-			<Parameter Name="Duration" Id="duration" Value="PT1MS" Type="Duration" />
+			<Parameter Name="Duration" Id="duration" Type="Duration" Value="PT1M" />
 		</ParameterBag>
 
 		<Action Id="validate" Name="Validation of order" Type="Use" ResourceType="Validation" ResourceId="validation" />
