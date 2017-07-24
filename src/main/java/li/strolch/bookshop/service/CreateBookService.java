@@ -3,10 +3,10 @@ package li.strolch.bookshop.service;
 import com.google.gson.JsonObject;
 
 import li.strolch.bookshop.BookShopConstants;
-import li.strolch.command.AddResourceCommand;
 import li.strolch.model.Resource;
 import li.strolch.model.json.FromFlatJsonVisitor;
 import li.strolch.model.json.StrolchElementToJsonVisitor;
+import li.strolch.persistence.api.AddResourceCommand;
 import li.strolch.persistence.api.StrolchTransaction;
 import li.strolch.rest.util.JsonServiceArgument;
 import li.strolch.rest.util.JsonServiceResult;
