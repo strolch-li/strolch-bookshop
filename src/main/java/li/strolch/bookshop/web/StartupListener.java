@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import li.strolch.agent.api.StrolchAgent;
 import li.strolch.agent.api.StrolchBootstrapper;
+import li.strolch.utils.helper.StringHelper;
 
 @WebListener
 public class StartupListener implements ServletContextListener {
@@ -23,6 +24,7 @@ public class StartupListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 
 		logger.info("Starting Bookshop...");
+		long start = System.currentTimeMillis();
 		try {
 			// we load the configuration by reading the boot strap file:
 			String boostrapFileName = "/WEB-INF/" + StrolchBootstrapper.FILE_BOOTSTRAP;
@@ -39,7 +41,8 @@ public class StartupListener implements ServletContextListener {
 			throw e;
 		}
 
-		logger.info("Started Bookshop.");
+		long took = System.currentTimeMillis() - start;
+		logger.info("Started Bookshop in " + (StringHelper.formatMillisecondsDuration(took)));
 	}
 
 	@Override
