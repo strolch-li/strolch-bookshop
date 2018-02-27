@@ -2,7 +2,6 @@ package li.strolch.bookshop.service;
 
 import li.strolch.bookshop.BookShopConstants;
 import li.strolch.model.Resource;
-import li.strolch.persistence.api.RemoveResourceCommand;
 import li.strolch.persistence.api.StrolchTransaction;
 import li.strolch.service.StringServiceArgument;
 import li.strolch.service.api.AbstractService;
@@ -31,10 +30,8 @@ public class RemoveBookService extends AbstractService<StringServiceArgument, Se
 			// get the existing book
 			Resource book = tx.getResourceBy(BookShopConstants.TYPE_BOOK, arg.value, true);
 
-			// add command to remove the resource
-			RemoveResourceCommand cmd = new RemoveResourceCommand(getContainer(), tx);
-			cmd.setResource(book);
-			tx.addCommand(cmd);
+			// save changes
+			tx.remove(book);
 
 			// notify the TX that it should commit on close
 			tx.commitOnClose();

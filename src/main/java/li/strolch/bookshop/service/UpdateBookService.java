@@ -1,16 +1,16 @@
 package li.strolch.bookshop.service;
 
-import com.google.gson.JsonObject;
+import static li.strolch.report.ReportConstants.BAG_RELATIONS;
 
+import com.google.gson.JsonObject;
 import li.strolch.bookshop.BookShopConstants;
 import li.strolch.model.Resource;
 import li.strolch.model.Tags.Json;
 import li.strolch.model.json.FromFlatJsonVisitor;
-import li.strolch.model.json.StrolchElementToJsonVisitor;
+import li.strolch.model.json.StrolchRootElementToJsonVisitor;
 import li.strolch.persistence.api.StrolchTransaction;
-import li.strolch.persistence.api.UpdateResourceCommand;
-import li.strolch.rest.util.JsonServiceArgument;
-import li.strolch.rest.util.JsonServiceResult;
+import li.strolch.service.JsonServiceArgument;
+import li.strolch.service.JsonServiceResult;
 import li.strolch.service.api.AbstractService;
 import li.strolch.utils.dbc.DBC;
 
@@ -43,19 +43,17 @@ public class UpdateBookService extends AbstractService<JsonServiceArgument, Json
 			book = tx.getResourceBy(BookShopConstants.TYPE_BOOK, arg.objectId, true);
 
 			// map all values from the JSON object into the new book element
-			new FromFlatJsonVisitor().visit(book, arg.jsonElement.getAsJsonObject());
+			book.accept(new FromFlatJsonVisitor(arg.jsonElement.getAsJsonObject()).ignoreBag(BAG_RELATIONS));
 
-			// add command to update the resource
-			UpdateResourceCommand cmd = new UpdateResourceCommand(getContainer(), tx);
-			cmd.setResource(book);
-			tx.addCommand(cmd);
+			// save changes
+			tx.update(book);
 
 			// notify the TX that it should commit on close
 			tx.commitOnClose();
 		}
 
 		// map the return value to JSON
-		JsonObject result = book.accept(new StrolchElementToJsonVisitor().flat());
+		JsonObject result = book.accept(new StrolchRootElementToJsonVisitor().flat());
 
 		// and return the result
 		return new JsonServiceResult(result);

@@ -1,42 +1,34 @@
 package li.strolch.bookshop.rest;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.util.List;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import li.strolch.bookshop.BookShopConstants;
 import li.strolch.bookshop.query.BooksQuery;
 import li.strolch.bookshop.service.CreateBookService;
 import li.strolch.bookshop.service.RemoveBookService;
 import li.strolch.bookshop.service.UpdateBookService;
 import li.strolch.model.Resource;
-import li.strolch.model.json.StrolchElementToJsonVisitor;
+import li.strolch.model.json.StrolchRootElementToJsonVisitor;
 import li.strolch.model.query.NameSelection;
 import li.strolch.model.query.OrSelection;
 import li.strolch.model.query.ParameterSelection;
 import li.strolch.model.query.ResourceQuery;
+import li.strolch.model.visitor.ResourceVisitor;
 import li.strolch.persistence.api.StrolchTransaction;
 import li.strolch.privilege.model.Certificate;
 import li.strolch.rest.RestfulStrolchComponent;
 import li.strolch.rest.StrolchRestfulConstants;
 import li.strolch.rest.helper.ResponseUtil;
-import li.strolch.rest.util.JsonServiceArgument;
-import li.strolch.rest.util.JsonServiceResult;
+import li.strolch.service.JsonServiceArgument;
+import li.strolch.service.JsonServiceResult;
 import li.strolch.service.StringServiceArgument;
 import li.strolch.service.api.ServiceHandler;
 import li.strolch.service.api.ServiceResult;
@@ -62,17 +54,16 @@ public class BooksResource {
 		try (StrolchTransaction tx = RestfulStrolchComponent.getInstance().openTx(cert, getClass())) {
 
 			// prepare the query
-			ResourceQuery<JsonObject> query = new BooksQuery<JsonObject>() //
-					// set transformation to JSON
-					.setVisitor(new StrolchElementToJsonVisitor().flat());
+			ResourceQuery<Resource> query = new BooksQuery<>();
 
 			// prepare selections
 			if (StringHelper.isEmpty(queryS)) {
 				query.withAny();
 			} else {
 				OrSelection or = new OrSelection();
-				or.with(ParameterSelection.stringSelection(BookShopConstants.BAG_PARAMETERS,
-						BookShopConstants.PARAM_DESCRIPTION, queryS, StringMatchMode.ci()));
+				or.with(ParameterSelection
+						.stringSelection(BookShopConstants.BAG_PARAMETERS, BookShopConstants.PARAM_DESCRIPTION, queryS,
+								StringMatchMode.ci()));
 				or.with(new NameSelection(queryS, StringMatchMode.ci()));
 
 				// add selections
@@ -80,13 +71,15 @@ public class BooksResource {
 			}
 
 			// perform the query
-			List<JsonObject> books = tx.doQuery(query);
+			List<Resource> books = tx.doQuery(query);
 
 			// perform paging
-			Paging<JsonObject> page = Paging.asPage(books, offset, limit);
+			Paging<Resource> paging = Paging.asPage(books, offset, limit);
+			List<Resource> page = paging.getPage();
 
-			// return result
-			return ResponseUtil.toResponse(StrolchRestfulConstants.DATA, page.getPage());
+			// return result, transforming to JSON
+			ResourceVisitor<JsonObject> visitor = new StrolchRootElementToJsonVisitor().flat().asResourceVisitor();
+			return ResponseUtil.listToResponse(StrolchRestfulConstants.DATA, page, a -> a.accept(visitor));
 		}
 	}
 
@@ -107,7 +100,7 @@ public class BooksResource {
 				return ResponseUtil.toResponse(Status.NOT_FOUND, "Book " + id + " does not exist!");
 
 			// transform to JSON
-			JsonObject bookJ = book.accept(new StrolchElementToJsonVisitor().flat());
+			JsonObject bookJ = book.accept(new StrolchRootElementToJsonVisitor().flat());
 
 			// return
 			return ResponseUtil.toResponse(StrolchRestfulConstants.DATA, bookJ);
