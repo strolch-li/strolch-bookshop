@@ -1,23 +1,19 @@
 package li.strolch.bookshop.web;
 
-import java.util.logging.Level;
-
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Priorities;
-
-import org.glassfish.jersey.logging.LoggingFeature;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.ServerProperties;
+import java.util.logging.Level;
 
 import li.strolch.bookshop.rest.BooksResource;
 import li.strolch.rest.RestfulStrolchComponent;
 import li.strolch.rest.StrolchRestfulExceptionMapper;
 import li.strolch.rest.endpoint.AuthenticationService;
-import li.strolch.rest.filters.AccessControlResponseFilter;
-import li.strolch.rest.filters.AuthenticationRequestFilter;
-import li.strolch.rest.filters.AuthenticationResponseFilter;
-import li.strolch.rest.filters.CharsetResponseFilter;
-import li.strolch.rest.filters.HttpCacheResponseFilter;
+import li.strolch.rest.endpoint.Inspector;
+import li.strolch.rest.endpoint.ModelQuery;
+import li.strolch.rest.filters.*;
+import org.glassfish.jersey.logging.LoggingFeature;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 
 @ApplicationPath("rest")
 public class RestfulApplication extends ResourceConfig {
@@ -26,6 +22,8 @@ public class RestfulApplication extends ResourceConfig {
 
 		// add strolch resources
 		register(AuthenticationService.class);
+		register(ModelQuery.class);
+		register(Inspector.class);
 
 		// add project resources by package name
 		packages(BooksResource.class.getPackage().getName());
