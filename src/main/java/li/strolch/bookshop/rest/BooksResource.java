@@ -6,21 +6,16 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import java.util.List;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import li.strolch.bookshop.BookShopConstants;
-import li.strolch.bookshop.query.BooksQuery;
+import li.strolch.bookshop.search.BookSearch;
 import li.strolch.bookshop.service.CreateBookService;
 import li.strolch.bookshop.service.RemoveBookService;
 import li.strolch.bookshop.service.UpdateBookService;
 import li.strolch.model.Resource;
 import li.strolch.model.json.StrolchRootElementToJsonVisitor;
-import li.strolch.model.query.NameSelection;
-import li.strolch.model.query.OrSelection;
-import li.strolch.model.query.ParameterSelection;
-import li.strolch.model.query.ResourceQuery;
 import li.strolch.model.visitor.ResourceVisitor;
 import li.strolch.persistence.api.StrolchTransaction;
 import li.strolch.privilege.model.Certificate;
@@ -32,7 +27,6 @@ import li.strolch.service.JsonServiceResult;
 import li.strolch.service.StringServiceArgument;
 import li.strolch.service.api.ServiceHandler;
 import li.strolch.service.api.ServiceResult;
-import li.strolch.utils.StringMatchMode;
 import li.strolch.utils.collections.Paging;
 import li.strolch.utils.helper.StringHelper;
 
@@ -51,36 +45,19 @@ public class BooksResource {
 		int limit = StringHelper.isNotEmpty(limitS) ? Integer.valueOf(limitS) : 20;
 
 		// open the TX with the certificate, using this class as context
+		Paging<Resource> paging;
 		try (StrolchTransaction tx = RestfulStrolchComponent.getInstance().openTx(cert, getClass())) {
 
-			// prepare the query
-			ResourceQuery<Resource> query = new BooksQuery<>();
-
-			// prepare selections
-			if (StringHelper.isEmpty(queryS)) {
-				query.withAny();
-			} else {
-				OrSelection or = new OrSelection();
-				or.with(ParameterSelection
-						.stringSelection(BookShopConstants.BAG_PARAMETERS, BookShopConstants.PARAM_DESCRIPTION, queryS,
-								StringMatchMode.ci()));
-				or.with(new NameSelection(queryS, StringMatchMode.ci()));
-
-				// add selections
-				query.with(or);
-			}
-
-			// perform the query
-			List<Resource> books = tx.doQuery(query);
-
-			// perform paging
-			Paging<Resource> paging = Paging.asPage(books, offset, limit);
-			List<Resource> page = paging.getPage();
-
-			// return result, transforming to JSON
-			ResourceVisitor<JsonObject> visitor = new StrolchRootElementToJsonVisitor().flat().asResourceVisitor();
-			return ResponseUtil.listToResponse(StrolchRestfulConstants.DATA, page, a -> a.accept(visitor));
+			// perform a book search
+			paging = new BookSearch() //
+					.stringQuery(queryS) //
+					.search(tx) //
+					.orderByName(false) //
+					.toPaging(offset, limit);
 		}
+
+		ResourceVisitor<JsonObject> visitor = new StrolchRootElementToJsonVisitor().flat().asResourceVisitor();
+		return ResponseUtil.toResponse(paging, e -> e.accept(visitor));
 	}
 
 	@GET
