@@ -1,6 +1,6 @@
 package li.strolch.bookshop.service;
 
-import static li.strolch.report.ReportConstants.BAG_RELATIONS;
+import static li.strolch.model.StrolchModelConstants.BAG_RELATIONS;
 
 import com.google.gson.JsonObject;
 import li.strolch.bookshop.BookShopConstants;
@@ -13,8 +13,6 @@ import li.strolch.service.JsonServiceResult;
 import li.strolch.service.api.AbstractService;
 
 public class CreateBookService extends AbstractService<JsonServiceArgument, JsonServiceResult> {
-
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected JsonServiceResult getResultInstance() {
