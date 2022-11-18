@@ -17,7 +17,7 @@
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
         <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
 
-        <jdk.version>1.8</jdk.version>
+        <jdk.version>17</jdk.version>
 
         <jersey.version>2.25.1</jersey.version>
         <slf4j.version>1.7.25</slf4j.version>
@@ -40,7 +40,7 @@
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
 
-        <strolch.version>1.6.0-SNAPSHOT</strolch.version>
+        <strolch.version>1.8.0-SNAPSHOT</strolch.version>
 
         <warFinalName>bookshop</warFinalName>
         <m2eclipse.wtp.contextRoot>${warFinalName}</m2eclipse.wtp.contextRoot>
