@@ -15,6 +15,7 @@ In this tutorial project we build a book store using Strolch. The book store has
 *   The store owner can see the orders by state (pending, preparing, sent)
 *   The store owner can update the state of an order (preparing, sent)
 *   Notify the user when the order is sent
+*   **Modern Web UI**: A clean, branded web interface to manage books (Login, Search, Add, Edit, Delete). Featuring Strolch's mascot and logo for a professional look.
 
 ## Getting Started
 

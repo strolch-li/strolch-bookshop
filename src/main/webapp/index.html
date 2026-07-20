@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strolch Bookshop</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="header-brand">
+                <img src="assets/logo.svg" alt="Strolch Logo" class="logo">
+                <h1>Strolch Bookshop</h1>
+            </div>
+            <div id="user-info" class="hidden">
+                <span id="username-display"></span>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <main>
+            <section id="login-section">
+                <div class="section-header">
+                    <img src="assets/mascot.svg" alt="Strolch Mascot" class="mascot">
+                    <h2>Login</h2>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                    <p id="login-error" class="error"></p>
+                </form>
+            </section>
+
+            <section id="books-section" class="hidden">
+                <div class="actions">
+                    <input type="text" id="search-input" placeholder="Search books...">
+                    <button id="show-add-book-btn">+ Add Book</button>
+                </div>
+
+                <div class="table-container">
+                    <table id="books-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="books-body">
+                            <!-- Books will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="books-loading" class="spinner hidden"></div>
+
+                <div class="pagination">
+                    <span id="page-info"></span>
+                    <div class="pagination-controls">
+                        <button id="prev-btn">Previous</button>
+                        <button id="next-btn">Next</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="book-form-section" class="hidden">
+                <h2 id="form-title">Add Book</h2>
+                <form id="book-form">
+                    <input type="hidden" id="book-id-orig">
+                    <div class="form-group">
+                        <label for="book-id">ID:</label>
+                        <input type="text" id="book-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-name">Title:</label>
+                        <input type="text" id="book-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-description">Description:</label>
+                        <textarea id="book-description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-quantity">Quantity:</label>
+                        <input type="number" id="book-quantity" value="0" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="save-book-btn">Save</button>
+                        <button type="button" id="cancel-book-btn">Cancel</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
