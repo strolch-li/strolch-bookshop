@@ -17,6 +17,18 @@ In this tutorial project we build a book store using Strolch. The book store has
 *   Notify the user when the order is sent
 *   **Modern Web UI**: A clean, branded web interface to manage books (Login, Search, Add, Edit, Delete). Featuring Strolch's mascot and logo for a professional look.
 
+## Web UI Screenshots
+ 
+The modern Web UI provides a clean interface for managing the bookshop.
+
+### Login Screen
+![Login Screen](docs/img/login_screen.png)
+
+### Book Table
+![Book Table](docs/img/book_table.png)
+
+![Add Book](docs/img/add_book.png)
+
 ## Getting Started
 
 ### Prerequisites
@@ -59,6 +71,7 @@ To run the Bookshop using Docker, follow these steps:
     docker compose up --build
     ```
 3.  The application will be available at `http://localhost:8080/bookshop`.
+4.  Login with the default credentials: **admin** / **admin**.
 
 The Docker configuration uses the `runtime` directory for configuration and data. Any changes made to the `runtime` directory on your host will be reflected in the container.
 

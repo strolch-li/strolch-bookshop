@@ -32,6 +32,7 @@ The UI provides CRUD operations for books.
 - `app.js`: Contains all the logic for API interaction, DOM manipulation, and state management.
 - `assets/`: Contains image assets like the Strolch logo and mascot.
 - `favicon.ico`: The browser favicon for the application.
+- `docs/img/`: Contains screenshots of the application.
 
 ## File Locations
 All web resources are located in the `src/main/webapp` directory of the `strolch-bookshop` module:
