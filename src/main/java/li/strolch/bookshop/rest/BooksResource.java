@@ -48,12 +48,15 @@ public class BooksResource {
 		Paging<Resource> paging;
 		try (StrolchTransaction tx = RestfulStrolchComponent.getInstance().openTx(cert, getClass())) {
 
+			// get the total count of books (before filtering)
+			long dataSetSize = tx.getResourceCount(BookShopConstants.TYPE_BOOK);
+
 			// perform a book search
-			paging = new BookSearch() //
-					.stringQuery(queryS) //
-					.search(tx) //
-					.orderByName(false) //
-					.toPaging(offset, limit);
+			paging = new BookSearch()
+					.stringQuery(queryS)
+					.search(tx)
+					.orderByName(false)
+					.toPaging(offset, limit, dataSetSize);
 		}
 
 		ResourceVisitor<JsonObject> visitor = new StrolchRootElementToJsonVisitor().flat().asResourceVisitor();
