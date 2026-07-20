@@ -20,8 +20,9 @@ public class BookSearch extends ResourceSearch {
 		String[] values = value.split(" ");
 
 		// add where clauses for id, name and description
-		where(id().containsIgnoreCase(values) //
-				.or(name().containsIgnoreCase(values)) //
+		where(id()
+				.containsIgnoreCase(values)
+				.or(name().containsIgnoreCase(values))
 				.or(param(BAG_PARAMETERS, PARAM_DESCRIPTION).containsIgnoreCase(values)));
 
 		return this;
