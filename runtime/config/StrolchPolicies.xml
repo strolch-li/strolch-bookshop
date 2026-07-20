@@ -2,7 +2,7 @@
 
 	<PolicyType Type="ExecutionPolicy" Api="li.strolch.execution.policy.ExecutionPolicy">
 		<Policy Key="DurationExecution" Class="li.strolch.execution.policy.DurationExecution" />
-		<Policy Key="ReservationExection" Class="li.strolch.execution.policy.ReservationExection" />
+		<Policy Key="ReservationExection" Class="li.strolch.execution.policy.ReservationExecution" />
 	</PolicyType>
 
 	<PolicyType Type="ConfirmationPolicy" Api="li.strolch.execution.policy.ConfirmationPolicy">
