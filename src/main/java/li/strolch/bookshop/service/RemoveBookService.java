@@ -3,11 +3,11 @@ package li.strolch.bookshop.service;
 import li.strolch.bookshop.BookShopConstants;
 import li.strolch.model.Resource;
 import li.strolch.persistence.api.StrolchTransaction;
-import li.strolch.service.StringServiceArgument;
+import li.strolch.service.StringArgument;
 import li.strolch.service.api.AbstractService;
 import li.strolch.service.api.ServiceResult;
 
-public class RemoveBookService extends AbstractService<StringServiceArgument, ServiceResult> {
+public class RemoveBookService extends AbstractService<StringArgument, ServiceResult> {
 
 	@Override
 	protected ServiceResult getResultInstance() {
@@ -15,12 +15,12 @@ public class RemoveBookService extends AbstractService<StringServiceArgument, Se
 	}
 
 	@Override
-	public StringServiceArgument getArgumentInstance() {
-		return new StringServiceArgument();
+	public StringArgument getArgumentInstance() {
+		return new StringArgument();
 	}
 
 	@Override
-	protected ServiceResult internalDoService(StringServiceArgument arg) throws Exception {
+	protected ServiceResult internalDoService(StringArgument arg) throws Exception {
 
 		// open a new transaction, using the realm from the argument, or the certificate
 		try (StrolchTransaction tx = openArgOrUserTx(arg)) {

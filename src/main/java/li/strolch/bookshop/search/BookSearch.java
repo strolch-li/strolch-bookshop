@@ -1,9 +1,9 @@
 package li.strolch.bookshop.search;
 
 import static li.strolch.bookshop.BookShopConstants.*;
-import static li.strolch.utils.helper.StringHelper.isEmpty;
 
 import li.strolch.search.ResourceSearch;
+import li.strolch.utils.helper.StringHelper;
 
 public class BookSearch extends ResourceSearch {
 
@@ -12,7 +12,7 @@ public class BookSearch extends ResourceSearch {
 	}
 
 	public BookSearch stringQuery(String value) {
-		if (isEmpty(value))
+		if (StringHelper.isEmpty(value))
 			return this;
 
 		// split by spaces

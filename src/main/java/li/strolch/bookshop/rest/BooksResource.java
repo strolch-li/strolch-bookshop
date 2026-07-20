@@ -1,11 +1,11 @@
 package li.strolch.bookshop.rest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -24,7 +24,7 @@ import li.strolch.rest.StrolchRestfulConstants;
 import li.strolch.rest.helper.ResponseUtil;
 import li.strolch.service.JsonServiceArgument;
 import li.strolch.service.JsonServiceResult;
-import li.strolch.service.StringServiceArgument;
+import li.strolch.service.StringArgument;
 import li.strolch.service.api.ServiceHandler;
 import li.strolch.service.api.ServiceResult;
 import li.strolch.utils.collections.Paging;
@@ -41,8 +41,8 @@ public class BooksResource {
 		// this is an authenticated method call, thus we can get the certificate from the request:
 		Certificate cert = (Certificate) request.getAttribute(StrolchRestfulConstants.STROLCH_CERTIFICATE);
 
-		int offset = StringHelper.isNotEmpty(offsetS) ? Integer.valueOf(offsetS) : 0;
-		int limit = StringHelper.isNotEmpty(limitS) ? Integer.valueOf(limitS) : 20;
+		int offset = StringHelper.isNotEmpty(offsetS) ? Integer.parseInt(offsetS) : 0;
+		int limit = StringHelper.isNotEmpty(limitS) ? Integer.parseInt(limitS) : 20;
 
 		// open the TX with the certificate, using this class as context
 		Paging<Resource> paging;
@@ -92,7 +92,7 @@ public class BooksResource {
 		Certificate cert = (Certificate) request.getAttribute(StrolchRestfulConstants.STROLCH_CERTIFICATE);
 
 		// parse data to JSON
-		JsonObject jsonData = new JsonParser().parse(data).getAsJsonObject();
+		JsonObject jsonData = JsonParser.parseString(data).getAsJsonObject();
 
 		// instantiate the service with the argument
 		CreateBookService svc = new CreateBookService();
@@ -118,7 +118,7 @@ public class BooksResource {
 		Certificate cert = (Certificate) request.getAttribute(StrolchRestfulConstants.STROLCH_CERTIFICATE);
 
 		// parse data to JSON
-		JsonObject jsonData = new JsonParser().parse(data).getAsJsonObject();
+		JsonObject jsonData = JsonParser.parseString(data).getAsJsonObject();
 
 		// instantiate the service with the argument
 		UpdateBookService svc = new UpdateBookService();
@@ -139,14 +139,14 @@ public class BooksResource {
 	@DELETE
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(@Context HttpServletRequest request, @PathParam("id") String id) {
+	public Response remove(@Context HttpServletRequest request, @PathParam("id") String id) {
 
 		// this is an authenticated method call, thus we can get the certificate from the request:
 		Certificate cert = (Certificate) request.getAttribute(StrolchRestfulConstants.STROLCH_CERTIFICATE);
 
 		// instantiate the service with the argument
 		RemoveBookService svc = new RemoveBookService();
-		StringServiceArgument arg = svc.getArgumentInstance();
+		StringArgument arg = svc.getArgumentInstance();
 		arg.value = id;
 
 		// perform the service

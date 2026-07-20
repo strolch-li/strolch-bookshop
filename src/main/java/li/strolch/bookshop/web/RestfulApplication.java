@@ -1,16 +1,11 @@
 package li.strolch.bookshop.web;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.Priorities;
+import jakarta.ws.rs.ApplicationPath;
 import java.util.logging.Level;
 
 import li.strolch.bookshop.rest.BooksResource;
 import li.strolch.rest.RestfulStrolchComponent;
-import li.strolch.rest.StrolchRestfulExceptionMapper;
-import li.strolch.rest.endpoint.AuthenticationService;
-import li.strolch.rest.endpoint.Inspector;
-import li.strolch.rest.endpoint.ModelQuery;
-import li.strolch.rest.filters.*;
+import li.strolch.rest.StrolchRestfulClasses;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
@@ -21,24 +16,11 @@ public class RestfulApplication extends ResourceConfig {
 	public RestfulApplication() {
 
 		// add strolch resources
-		register(AuthenticationService.class);
-		register(ModelQuery.class);
-		register(Inspector.class);
+		registerClasses(StrolchRestfulClasses.getRestfulClasses());
+		registerClasses(StrolchRestfulClasses.getProviderClasses());
 
 		// add project resources by package name
 		packages(BooksResource.class.getPackage().getName());
-
-		// filters
-		register(AuthenticationRequestFilter.class, Priorities.AUTHENTICATION);
-		register(AccessControlResponseFilter.class);
-		register(AuthenticationResponseFilter.class);
-		register(HttpCacheResponseFilter.class);
-
-		// log exceptions and return them as plain text to the caller
-		register(StrolchRestfulExceptionMapper.class);
-
-		// the JSON generated is in UTF-8
-		register(CharsetResponseFilter.class);
 
 		RestfulStrolchComponent restfulComponent = RestfulStrolchComponent.getInstance();
 		if (restfulComponent.isRestLogging()) {
